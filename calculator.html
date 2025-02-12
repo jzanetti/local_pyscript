@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Simple Calc</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="etc/calculator/core.css">
+    <script type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script type="module" src="https://esm.run/@webreflection/ascii-grid/component"></script>
+</head>
+<body>
+    <h2>A simple calculator from A&I</h2>
+    <script type="py" >
+        from pyscript import document
+
+        from decimal import Decimal
+        import re
+        
+        for form in document.querySelectorAll('form.calc'):
+            input = form.querySelector('input')
+        
+            def compute(event):
+                target = event.target
+                if target.tagName == 'BUTTON':
+                    input.value += target.textContent
+                elif target.tagName == 'INPUT' and target.type == 'submit':
+                    value = re.sub(r'(\d+(?:\.\d+)?)', r'Decimal("\1")', input.value)
+                    input.value = str(eval(value.strip() or '0'))
+        
+            form.onclick = compute
+
+    </script>
+    <form class="calc" onsubmit="event.preventDefault()" style="max-width:400px">
+        <ascii-grid>
+            <!--#
+                i i i i i i i i i c c
+                1 1 1 2 2 2 3 3 3 / /
+                4 4 4 5 5 5 6 6 6 * *
+                7 7 7 8 8 8 9 9 9 - -
+                0 0 0 , , , = = = + +
+            -->
+            <input><input type="reset" value="C">
+            <button>1</button><button>2</button><button>3</button><button>/</button>
+            <button>4</button><button>5</button><button>6</button><button>*</button>
+            <button>7</button><button>8</button><button>9</button><button>-</button>
+            <button>0</button><button>.</button><input type="submit" value="="><button>+</button>
+        </ascii-grid>
+    </form>
+</body>
+</html>
