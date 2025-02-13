@@ -31,6 +31,22 @@ This project uses `conda` for environment management.  Follow these steps to set
 1. **Install conda (if you haven't already):**  Download and install conda from [https://conda.io/](https://conda.io/).
 
 2. **Create the environment:** Open a terminal or command prompt and navigate to the project directory (where the `env.yml` file is located). Then, run the following command:
-
-   ```bash
+   ```
    conda env create -f env.yml
+   ```
+
+3. **Obtain Pyscript core:** Install Pyscript using `npm`
+   ```
+   npm i @pyscript/core
+   ```
+   The above should give you many `js` files located in `node_modules/@pyscript/core/dist`, you need to copy the entire `dist` folder to your working directory
+
+4. **Obtain PyOdide (Optional):**: Download the latest from `https://github.com/pyodide/pyodide/releases`:
+   `PyOdide` is needed if:
+      * We want to run applications offline, and kjjjd
+      * 3rd party libraries are needed
+   - Copy Pyodide interpreter to the working directory such as `<Application>/etc/runtime/pyodide/interpreter`, for example:
+      * `cp -rf cp -rf pyodide/pyodide* <Application>/etc/runtime/pyodide/interpreter`
+      * * `cp -rf cp -rf pyodide/python_stdlib.zip <Application>/etc/runtime/pyodide/interpreter`
+   - Copy the download PyOdide Core to the working directory such as `<Application>/etc/runtime/pyodide/core`
+   - Depending on the libraries needed, packages should be copied into a directory as `<Application>/etc/runtime/pyodide/pkgs`

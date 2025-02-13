@@ -4,15 +4,14 @@
     <title>Simple Calc</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="etc/calculator/core.css">
-    <script type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
-    <script type="module" src="https://esm.run/@webreflection/ascii-grid/component"></script>
+    <script type="module" src="etc/pyscript/dist/core.js"></script>
+    <script type="module" src="etc/runtime/component.js"></script>
+    <link rel="stylesheet" href="etc/runtime/core.css">
 </head>
 <body>
     <h2>A simple calculator from A&I</h2>
-    <script type="py" >
+    <py-script>
         from pyscript import document
-
         from decimal import Decimal
         import re
         
@@ -29,7 +28,7 @@
         
             form.onclick = compute
 
-    </script>
+    </py-script>
     <form class="calc" onsubmit="event.preventDefault()" style="max-width:400px">
         <ascii-grid>
             <!--#

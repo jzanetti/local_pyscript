@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Simple Calc</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script type="module" src="etc/pyscript/dist/core.js"></script>
+</head>
+<body>
+    <h2>Run Pandas (with internet)</h2>
+    <py-script>
+        import pyodide_js
+        await pyodide_js.loadPackage("micropip")
+        import micropip
+        await micropip.install("pandas")
+        import pandas
+        from pyscript import display
+
+        d = {'col1': [1, 2], 'col2': [3, 4]}
+        df = pandas.DataFrame(data=d)
+        display(df)
+
+    </py-script>
+</body>
+</html>

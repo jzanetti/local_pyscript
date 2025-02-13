@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Run Pandas (without internet)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script type="module" src="etc/pyscript/dist/core.js"></script>
+    <link rel="stylesheet" href="etc/pyscript/dist/core.css">
+    <py-config>
+        interpreter = "etc/pyodide/interpreter/pyodide.mjs"
+    </py-config>
+</head>
+<body>
+    <h2>Run Pandas (without internet)</h2>
+    <script type="py">
+        from pyodide_js import loadPackage
+        pkg_dir = "etc/pyodide/pkgs/"
+        for proc_pkg in [
+            "python_dateutil-2.9.0.post0-py2.py3-none-any.whl", 
+            "pytz-2024.1-py2.py3-none-any.whl",
+            "six-1.16.0-py2.py3-none-any.whl",
+            "numpy-2.0.2-cp312-cp312-pyodide_2024_0_wasm32.whl",
+            "pandas-2.2.3-cp312-cp312-pyodide_2024_0_wasm32.whl"]:
+            await loadPackage(pkg_dir + proc_pkg)
+
+        import pandas
+        from pyscript import display
+
+        d = {'col1': [1, 2], 'col2': [3, 4]}
+        df = pandas.DataFrame(data=d)
+        display(df)
+    </script>
+    
+</body>
+</html>
