@@ -41,12 +41,10 @@ This project uses `conda` for environment management.  Follow these steps to set
    ```
    The above should give you many `js` files located in `node_modules/@pyscript/core/dist`, you need to copy the entire `dist` folder to your working directory
 
-4. **Obtain PyOdide (Optional):**: Download the latest from `https://github.com/pyodide/pyodide/releases`:
-   `PyOdide` is needed if:
-      * We want to run applications offline, and kjjjd
-      * 3rd party libraries are needed
+4. **Obtain PyOdide (Optional):**: `PyOdide` is needed if (1) you want to run applications offline, and (2)3rd party libraries are needed:
+   - Download the latest from `https://github.com/pyodide/pyodide/releases`
    - Copy Pyodide interpreter to the working directory such as `<Application>/etc/runtime/pyodide/interpreter`, for example:
       * `cp -rf cp -rf pyodide/pyodide* <Application>/etc/runtime/pyodide/interpreter`
-      * * `cp -rf cp -rf pyodide/python_stdlib.zip <Application>/etc/runtime/pyodide/interpreter`
+      * `cp -rf cp -rf pyodide/python_stdlib.zip <Application>/etc/runtime/pyodide/interpreter`
    - Copy the download PyOdide Core to the working directory such as `<Application>/etc/runtime/pyodide/core`
    - Depending on the libraries needed, packages should be copied into a directory as `<Application>/etc/runtime/pyodide/pkgs`
