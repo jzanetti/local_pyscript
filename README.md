@@ -1,6 +1,6 @@
 # Running Applications in a Standalone Environment
 
-This document outlines the steps to run the application in a standalone environment, along with instructions for developers setting up their local development environment.
+This document outlines the steps to run the application in a standalone browser environment, along with instructions for developers setting up their local development environment.
 
 ## 🏃 Running the Application 
 
@@ -14,19 +14,13 @@ This application uses a simple local host for serving the files. Follow the inst
 
 **Windows:**
 
-1. Open `Windows PowerShell` or `Command Prompt`.
-2. Navigate to the application directory using the `cd` command. For example: `cd C:\test\app`
-3. Start the local web server: `python -m http.server 8080`
+1. Open the folder `run/win`
+2. Right click `start.ps1` and click `Run with PowerShell`
 
 **Linux/macOS:**
 
 1. Open a `terminal`.
-2. Navigate to the application directory using the `cd` command. For example: `cd /home/user/app`
-3. Start the local web server: `python3 -m http.server 8080` (Use `python3` if `python` defaults to Python 2)
-
-### 🌐 Step 3: Access the application
-
-Open your web browser and navigate to `http://localhost:8080`.  (Note the `http://` prefix and the single colon `:`). You should now be able to access the application.
+2. Navigate to the directory `run/linux`, and run `./start.sh`
 
 ## ⚙️ For Developers
 
