@@ -35,21 +35,19 @@ This project uses `conda` for environment management.  Follow these steps to set
    conda env create -f env.yml
    ```
 
-3. **Obtain Pyscript core:** Install Pyscript using `npm`
+3. **Obtain Pyscript core (Optional):** Install Pyscript using `npm`
    ```
    npm i @pyscript/core
    ```
    The above should give you many `js` files located in `node_modules/@pyscript/core/dist`, you need to copy the entire `dist` folder to your working directory
 
-4. **Obtain PyOdide (Optional):**: `PyOdide` is needed if (1) you want to run applications offline, and (2)3rd party libraries are needed:
+4. **Obtain PyOdide (Optional):**: `PyOdide` is needed if (1) you want to run applications offline, and (2) 3rd party libraries are needed:
    - Download the latest from `https://github.com/pyodide/pyodide/releases`
-   - Copy Pyodide interpreter to the working directory such as `<Application>/etc/runtime/pyodide/interpreter`, for example:
-      * `cp -rf cp -rf pyodide/pyodide* <Application>/etc/runtime/pyodide/interpreter`
-      * `cp -rf cp -rf pyodide/python_stdlib.zip <Application>/etc/runtime/pyodide/interpreter`
-   - Copy the download PyOdide Core to the working directory such as `<Application>/etc/runtime/pyodide/core`
-   - Depending on the libraries needed, packages should be copied into a directory as `<Application>/etc/runtime/pyodide/pkgs`
+   - For package comes with script to select dependancies, we can run the script to copy the required dependencies to the working directory. For example:
+      * for `casual_learn_without_internet`, we can run `python copy_pyodide.py`. 
+      * Otherwise, copy the entire downloaded packages to `<Application>/etc/pyodide`. For example: `cp -rf cp -rf pyodide/pyodide* <Application>/etc/pyodide`
 
-5. **Create PyOdide package (Optional):
+5. **Create PyOdide package (Optional):**
    - Start a PyOdide docker container: from the PyOdide repository, we can run:
       ```
       ./run_docker --root

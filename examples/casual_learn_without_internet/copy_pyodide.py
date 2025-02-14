@@ -21,7 +21,7 @@ PKGS = [
     "threadpoolctl"
 ]
 
-
+# PYODIDE_DIR = "C:\\Users\\ZhangSi\\Downloads\\pyodide-0.27.2\\pyodide"
 PYODIDE_DIR = "/Users/sijinzhang/Downloads/pyodide"
 OUTPUT_DIR = "examples/casual_learn_without_internet/etc/pyodide"
 INCLUDE_EXT = ["zip", "js", "json", "wasm", "ts", "map", "mjs"]
