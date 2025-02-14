@@ -48,3 +48,29 @@ This project uses `conda` for environment management.  Follow these steps to set
       * `cp -rf cp -rf pyodide/python_stdlib.zip <Application>/etc/runtime/pyodide/interpreter`
    - Copy the download PyOdide Core to the working directory such as `<Application>/etc/runtime/pyodide/core`
    - Depending on the libraries needed, packages should be copied into a directory as `<Application>/etc/runtime/pyodide/pkgs`
+
+5. **Create PyOdide package (Optional):
+   - Start a PyOdide docker container: from the PyOdide repository, we can run:
+      ```
+      ./run_docker --root
+      ```
+      Then update/install necessary librairies such as:
+      - `apt-get update`
+      - `apt-get install vim`
+      - Install emsdk (optional)
+          - `sudo apt-get install git`
+          - `git clone https://github.com/emscripten-core/emsdk.git`
+          - `cd emsdk`
+           - `./emsdk install 3.1.58`
+           - `./emsdk activate 3.1.58`
+           - `source ./emsdk_env.sh`
+
+  
+      Install the packages that we need inside the container:
+      - `cd /tmp`
+      - `pyodide skeleton pypi <Package name>`. For example, `pyodide skeleton pypi causal-learn`
+      - `pyodide build-recipes <Package name> --install`. For example, `pyodide build-recipes causal-learn --install`
+
+   - Copy the wheel file out. For example if the wheel file located in `/tmp/pkgs/dist/<PKG>.whl`.
+      - Get the container ID: `docker ps -a`, e.g., if the ID is `XXXX`
+      - Copy the wheel file to local:  `docker cp XXXX:/tmp/pkgs/dist/<PKG>.whl /tmp/<PKG>.whl`. For example, `docker cp 45279f929dd1:/tmp/pkgs/dist/causal_learn-0.1.4.0-py3-none-any.whl /tmp`

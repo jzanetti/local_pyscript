@@ -12,9 +12,11 @@
         import pyodide_js
         await pyodide_js.loadPackage("micropip")
         import micropip
+        await micropip.install("causal-learn")
         await micropip.install("pandas")
         import pandas
         from pyscript import display
+        from causallearn.search.ConstraintBased.PC import pc
 
         d = {'col1': [1, 2], 'col2': [3, 4]}
         df = pandas.DataFrame(data=d)

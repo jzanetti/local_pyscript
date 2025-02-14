@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Run Pandas (without internet)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script type="module" src="etc/pyscript/dist/core.js"></script>
+    <link rel="stylesheet" href="etc/pyscript/dist/core.css">
+    <py-config>
+        interpreter = "etc/pyodide/pyodide.mjs"
+        packages = ["pandas", "numpy", "scikit-learn"]
+    </py-config>
+</head>
+<body>
+    <h2>Run Pandas (without internet)</h2>
+    <script type="py">
+        from pyscript import display
+
+        import pandas
+        from sklearn import linear_model
+        
+        reg = linear_model.LinearRegression()
+        reg.fit([[0, 0], [1, 1], [2, 2]], [0, 1, 2])
+        display(reg.coef_)
+
+        d = {'col1': [1, 2], 'col2': [3, 4]}
+        df = pandas.DataFrame(data=d)
+        display(df)
+    </script>
+    
+</body>
+</html>
