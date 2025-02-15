@@ -55,13 +55,15 @@ This project uses `conda` for environment management.  Follow these steps to set
       Then update/install necessary librairies such as:
       - `apt-get update`
       - `apt-get install vim`
-      - Install emsdk (optional)
-          - `sudo apt-get install git`
-          - `git clone https://github.com/emscripten-core/emsdk.git`
-          - `cd emsdk`
-           - `./emsdk install 3.1.58`
-           - `./emsdk activate 3.1.58`
-           - `source ./emsdk_env.sh`
+      - Install emsdk (optional):
+         ```
+         sudo apt-get install git
+         git clone https://github.com/emscripten-core/emsdk.git
+         cd emsdk
+         ./emsdk install 3.1.58
+         ./emsdk activate 3.1.58
+         source ./emsdk_env.sh
+         ```
 
   
       Install the packages that we need inside the container:
@@ -72,3 +74,4 @@ This project uses `conda` for environment management.  Follow these steps to set
    - Copy the wheel file out. For example if the wheel file located in `/tmp/pkgs/dist/<PKG>.whl`.
       - Get the container ID: `docker ps -a`, e.g., if the ID is `XXXX`
       - Copy the wheel file to local:  `docker cp XXXX:/tmp/pkgs/dist/<PKG>.whl /tmp/<PKG>.whl`. For example, `docker cp 45279f929dd1:/tmp/pkgs/dist/causal_learn-0.1.4.0-py3-none-any.whl /tmp`
+      - Copy the `pyodide-lock.json` to local, e.g., `docker cp 45279f929dd1:/tmp/pkgs/dist/pyodide-lock.json /tmp`, and add the application to the application's original `pyodide-lock.json` (e.g., `etc/pyodide/pyodide-lock.json`)
