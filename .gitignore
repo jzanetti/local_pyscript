@@ -1,2 +1,5 @@
 examples/casual_learn_without_internet/etc
 examples/sklearn_without_internet/etc
+examples/econml_without_internet/etc
+.RData
+.DS_Store
