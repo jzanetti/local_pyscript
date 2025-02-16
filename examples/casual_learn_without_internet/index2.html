@@ -11,7 +11,8 @@
         packages = [
         "pandas", 
         "numpy", 
-        "scikit-learn", 
+        "scikit-learn",
+        "matplotlib",
         "networkx", 
         "causal-learn", 
         "pydot", 
@@ -21,15 +22,10 @@
 </head>
 <body>
     <h2>Run causallearn (without internet)</h2>
-    <script type="py">
-        from pyscript import display
-        from causallearn.search.ConstraintBased.PC import pc
-        from causallearn.utils.cit import chisq, fisherz, gsq, kci, mv_fisherz, d_separation
-        from causallearn.graph.SHD import SHD
-        from causallearn.utils.DAG2CPDAG import dag2cpdag
-        from causallearn.utils.TXT2GeneralGraph import txt2generalgraph
-        display("done")
-    </script>
-    
+    <!-- Placeholder for analysis results -->
+
+    <!-- Reference the external Python script -->
+    <py-script src="./main.py"></py-script>
+
 </body>
 </html>
