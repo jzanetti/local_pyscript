@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import pyscript
 import io
 
-file_path = "etc/test.csv"
+file_path = "testdata.csv"
 
 try:
     from pyodide.http import open_url
