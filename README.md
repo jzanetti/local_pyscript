@@ -1,6 +1,6 @@
 # Running Applications in a Offline Standalone Environment
 
-This document outlines the steps to run the application in a **standalone offline** environment, along with instructions for developers setting up their local development environment.
+This document outlines the steps to run the application in a **standalone offline** environment, along with instructions for developers setting up their local development environment. Contact `sijin.zhang@treasury.govt.nz` for details.
 
 ## 🏃 Running the Application 
 
@@ -79,7 +79,5 @@ This project uses `conda` for environment management.  Follow these steps to set
       - Get the container ID: `docker ps -a`, e.g., if the ID is `XXXX`
       - Copy the wheel file to local:  `docker cp XXXX:/tmp/pkgs/dist/<PKG>.whl /tmp/<PKG>.whl`. For example, `docker cp 45279f929dd1:/tmp/pkgs/dist/causal_learn-0.1.4.0-py3-none-any.whl /tmp`
       - Copy the `pyodide-lock.json` to local, e.g., `docker cp 45279f929dd1:/tmp/pkgs/dist/pyodide-lock.json /tmp`, and add the application to the application's original `pyodide-lock.json` (e.g., `etc/pyodide/pyodide-lock.json`)
-
-
-
-https://pyodide.org/en/stable/development/building-and-testing-packages.html#building-and-testing-packages-out-of-tree
+  
+   - Alternatively, one can follow the [link](https://pyodide.org/en/stable/development/building-and-testing-packages.html#building-and-testing-packages-out-of-tree) to directly build `whl` from the source codes.
