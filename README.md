@@ -52,14 +52,17 @@ This project uses `conda` for environment management.  Follow these steps to set
       ```
       ./run_docker --root
       ```
+   
     - Update/install necessary librairies such as:
       ```
       apt-get update
-      apt-get install vim
+      apt-get install vim -y
       ```
+
    - Install emsdk (optional):
       ```
-      sudo apt-get install git
+      cd /tmp
+      sudo apt-get install git -y
       git clone https://github.com/emscripten-core/emsdk.git
       cd emsdk
       ./emsdk install 3.1.58
@@ -67,7 +70,6 @@ This project uses `conda` for environment management.  Follow these steps to set
       source ./emsdk_env.sh
       ```
 
-  
    - Install the packages that we need inside the container:
       - `cd /tmp`
       - `pyodide skeleton pypi <Package name>`. For example, `pyodide skeleton pypi causal-learn`
