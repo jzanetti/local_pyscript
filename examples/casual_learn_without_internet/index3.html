@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Run causallearn (without internet)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script type="module" src="etc/pyscript/dist/core.js"></script>
+    <link rel="stylesheet" href="etc/pyscript/dist/core.css">
+    <py-config>
+        interpreter = "etc/pyodide/pyodide.mjs"
+        packages = [
+        "pandas", 
+        "numpy", 
+        "scikit-learn", 
+        "networkx", 
+        "causal-learn", 
+        "pydot", 
+        "momentchi2",
+        "tqdm"]
+    </py-config>
+</head>
+<body>
+    <h2>Run causallearn (without internet)</h2>
+    <button id="download-btn">Download Binary File</button>
+    <script type="py">
+        from js import document, URL
+        from js import document, URL, Blob
+
+        def create_csv_download(data, filename="data.csv"):
+            """Creates a downloadable CSV file."""
+            import csv
+            import io
+
+            # Create an in-memory text stream
+            csv_file = io.StringIO()
+            writer = csv.writer(csv_file)
+
+            # Write the data to the CSV file
+            for row in data:
+                writer.writerow(row)
+
+            csv_string = csv_file.getvalue()
+
+            # Create a Blob containing the CSV data
+            blob = Blob.new([csv_string], {type: "text/csv"})
+
+            # Create a URL for the Blob
+            url = URL.createObjectURL(blob)
+
+            # Create a link element for the download
+            link = document.createElement("a")
+            link.setAttribute("href", url)
+            link.setAttribute("download", filename)  # Set the filename
+            document.body.appendChild(link)  # Append to the document (necessary for Firefox)
+            link.click()  # Simulate a click to trigger the download
+            document.body.removeChild(link)  # Remove the link
+            URL.revokeObjectURL(url)  # Release the Blob URL
+
+
+        # Example usage:
+        data = [
+            ["Name", "Age", "City"],
+            ["Alice", "30", "New York"],
+            ["Bob", "25", "London"],
+            ["Charlie", "35", "Paris"],
+        ]
+
+        create_csv_download(data, "my_data.csv")
+    </script>
+    
+</body>
+</html>

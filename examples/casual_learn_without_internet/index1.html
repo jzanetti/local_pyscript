@@ -21,6 +21,7 @@
 </head>
 <body>
     <h2>Run causallearn (without internet)</h2>
+    <button id="download-btn">Download Binary File</button>
     <script type="py">
         from pyscript import display
         from causallearn.search.ConstraintBased.PC import pc
@@ -30,6 +31,33 @@
         from causallearn.utils.DAG2CPDAG import dag2cpdag
         from causallearn.utils.TXT2GeneralGraph import txt2generalgraph
         display("done")
+        
+        from js import document, Uint8Array, Blob, URL
+        import pyodide
+
+        # Create a binary file (example: a simple byte array)
+        binary_data = bytearray([0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x57, 0x6F, 0x72, 0x6C, 0x64])  # "Hello World" in bytes
+
+        def download_binary_file(x):
+            # Convert Python bytearray to JavaScript Uint8Array
+            js_array = Uint8Array.new(len(binary_data))
+            for i in range(len(binary_data)):
+                js_array[i] = binary_data[i]
+
+            # Create a Blob from the Uint8Array
+            blob = Blob.new([js_array], {type: "application/octet-stream"})
+
+            # Create a download link and trigger the download
+            url = URL.createObjectURL(blob)
+            link = document.createElement("a")
+            link.href = url
+            link.download = "example.test"  # File name
+            link.click()
+
+            # Clean up
+            URL.revokeObjectURL(url)
+
+        document.getElementById("download-btn").addEventListener("click", pyodide.ffi.create_proxy(download_binary_file))
     </script>
     
 </body>
