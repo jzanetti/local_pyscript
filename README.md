@@ -1,6 +1,6 @@
-# Running Applications in a Standalone Environment
+# Running Applications in a Offline Standalone Environment
 
-This document outlines the steps to run the application in a standalone browser environment, along with instructions for developers setting up their local development environment.
+This document outlines the steps to run the application in a **standalone offline** environment, along with instructions for developers setting up their local development environment.
 
 ## 🏃 Running the Application 
 
