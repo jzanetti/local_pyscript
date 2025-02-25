@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Run causallearn (without internet)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script type="module" src="etc/pyscript/dist/core.js"></script>
+    <link rel="stylesheet" href="etc/pyscript/dist/core.css">
+    <py-config>
+        interpreter = "etc/pyodide/pyodide.mjs"
+        packages = [
+        "pandas", 
+        "numpy", 
+        "scikit-learn",
+        "matplotlib",
+        "networkx", 
+        "causal-learn", 
+        "pydot",
+        "dowhy",
+        "sympy",
+        "statsmodels",
+        "momentchi2",
+        "tqdm"]
+    </py-config>
+</head>
+<body>
+    <h2>Run causallearn (without internet)</h2>
+    <!-- Placeholder for analysis results -->
+
+    <!-- Reference the external Python script -->
+    <py-script src="./casual_learn.py"></py-script>
+
+</body>
+</html>

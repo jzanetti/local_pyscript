@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Run causallearn (without internet)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script type="module" src="etc/pyscript/dist/core.js"></script>
+    <link rel="stylesheet" href="etc/pyscript/dist/core.css">
+    <py-config>
+        interpreter = "etc/pyodide/pyodide.mjs"
+        packages = [
+        "pandas", 
+        "numpy", 
+        "scikit-learn", 
+        "networkx", 
+        "causal-learn", 
+        "pydot", 
+        "momentchi2",
+        "tqdm"]
+    </py-config>
+</head>
+<body>
+    <h2>Run causallearn (write CSV file)</h2>
+    <button id="download-btn">Download Binary File</button>
+    <script type="py">
+        import matplotlib.pyplot as plt
+        import io
+        import base64
+        from js import document
+  
+        # Create a simple plot
+        plt.plot([1, 2, 3], [4, 5, 6])
+        plt.title("My Plot")
+  
+        # Save the plot to a BytesIO buffer as PNG
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+  
+        # Convert the PNG to a base64 string
+        img_data = base64.b64encode(buf.getvalue()).decode('utf-8')
+        buf.close()
+  
+        # Create a data URL for the image
+        data_url = f"data:image/png;base64,{img_data}"
+  
+        # Use JavaScript to trigger the download
+        link = document.createElement("a")
+        link.href = data_url
+        link.download = "my_plot.png"  # Filename for download
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    </script>
+    
+</body>
+</html>

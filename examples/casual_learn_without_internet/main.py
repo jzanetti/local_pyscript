@@ -5,8 +5,9 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pyscript
 import io
-
+import os
 file_path = "testdata.csv"
+
 
 try:
     from pyodide.http import open_url
