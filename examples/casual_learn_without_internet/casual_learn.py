@@ -22,7 +22,7 @@ FEATURES = {
     "Gender": {
         "name": "gender", 
         "category": {
-            "Male": 0, "Female": 1, "Other": 2},
+            "Male": 0, "Female": 1},
         "independant": True
     },
     "Education_Level": {
@@ -55,17 +55,19 @@ TREATMENTS_OUTCOMES = [
                 0: ["High School", "Bachelor's", "Bachelor's Degree"],
                 1: ["Master's", "Master's Degree", "PhD", "phD"]}
             },
-        "outcome": {"name": "Salary"}
+        "outcome": {"name": "Salary"},
+        "common_causes": None
     },
     {
         "treatment": {
-            "name": "Age",
+            "name": "Gender",
             "thres": None,
             #"thres": {
             #    0: ["Female"],
             #    1: ["Male", "Other"]}
             }, 
-        "outcome": {"name": "Salary"}
+        "outcome": {"name": "Salary"},
+        "common_causes": None
     }
 ]
 
@@ -135,6 +137,8 @@ if run_local:
 else:
     file_content = open_url("salary_data.csv").read()
     df = pd.read_csv(io.StringIO(file_content))
+
+df = df[df["Gender"] != "Other"]
 
 df.rename(columns=lambda x:x.replace(' ', '_'),inplace=True)
 
@@ -274,7 +278,8 @@ for proc_treatment_outcome in TREATMENTS_OUTCOMES:
         data = proc_df,
         graph=causal_graph,
         treatment=proc_treatment_name,
-        outcome=proc_outcome_name)
+        outcome=proc_outcome_name,
+        common_causes=proc_treatment_outcome["common_causes"])
 
     if not model_graph_plot:
         model.view_model(file_name="causal_model")
@@ -291,8 +296,7 @@ for proc_treatment_outcome in TREATMENTS_OUTCOMES:
             identified_estimand=estimands,
             method_name='backdoor.propensity_score_weighting',
             confidence_intervals=True,
-            test_significance=True,
-            # common_causes=['gender']
+            test_significance=True
         )
     except Exception:
         estimate= model.estimate_effect(
