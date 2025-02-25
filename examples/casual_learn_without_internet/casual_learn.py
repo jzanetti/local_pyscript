@@ -2,13 +2,16 @@
 import pandas as pd
 import numpy as np
 from dowhy import CausalModel
+from dowhy.plotter import plot_causal_effect
 from causallearn.search.ConstraintBased.PC import pc
 from causallearn.search.ConstraintBased.FCI import fci
 from causallearn.utils.PCUtils.BackgroundKnowledge import BackgroundKnowledge
 import networkx as nx
 from causallearn.graph.GraphNode import GraphNode
+from copy import deepcopy
 import warnings 
 warnings.filterwarnings("ignore")  # Python warnings
+
 
 
 # <><><><><><><><><><><><><><><>
@@ -43,10 +46,28 @@ PRIOR_KNOWLEDGE = {
     "forbidden": ["Gender -> Education_Level"]
 }
 
-TREATMENTS_OUTCOMES = {
-    "Education_Level": "Salary",
-    "Gender": "Salary"
-} 
+TREATMENTS_OUTCOMES = [
+    {
+        "treatment": {
+            "name": "Education_Level",
+            # "thres": None
+            "thres": {
+                0: ["High School", "Bachelor's", "Bachelor's Degree"],
+                1: ["Master's", "Master's Degree", "PhD", "phD"]}
+            },
+        "outcome": {"name": "Salary"}
+    },
+    {
+        "treatment": {
+            "name": "Age",
+            "thres": None,
+            #"thres": {
+            #    0: ["Female"],
+            #    1: ["Male", "Other"]}
+            }, 
+        "outcome": {"name": "Salary"}
+    }
+]
 
 CAUSAL_GRAPH_METHOD = "fci" # pc, manual, fci
 
@@ -146,7 +167,6 @@ for ori_name in FEATURES:
 # <><><><><><><><><><><><><><><>
 # Step 3: Create casual graph
 # <><><><><><><><><><><><><><><>
-
 node_names = df.columns.tolist()
 
 if CAUSAL_GRAPH_METHOD in ["pc", "fci"]:
@@ -233,12 +253,25 @@ elif CAUSAL_GRAPH_METHOD == "manual":
 # <><><><><><><><><><><><><><><>
 model_graph_plot = False
 all_outputs = []
-for proc_treatment in TREATMENTS_OUTCOMES:
+for proc_treatment_outcome in TREATMENTS_OUTCOMES:
 
-    proc_treatment_name = FEATURES[proc_treatment]["name"]
-    proc_outcome_name = FEATURES[TREATMENTS_OUTCOMES[proc_treatment]]["name"]
+    proc_df = deepcopy(df)
+    proc_treatment_name = FEATURES[proc_treatment_outcome["treatment"]["name"]]["name"]
+    proc_outcome_name = FEATURES[proc_treatment_outcome["outcome"]["name"]]["name"]
+
+    if proc_treatment_outcome["treatment"]["thres"] is not None:
+        for proc_feature in FEATURES:
+            if FEATURES[proc_feature]["name"] != proc_treatment_name:
+                continue
+            
+            for proc_thres in [0, 1]:
+                values_to_replace = list(set([FEATURES[proc_feature]["category"][item] for 
+                        item in proc_treatment_outcome["treatment"]["thres"][proc_thres]]))
+                proc_df[proc_treatment_name] = proc_df[
+                    proc_treatment_name].replace(values_to_replace, proc_thres)
+            
     model= CausalModel(
-        data = df,
+        data = proc_df,
         graph=causal_graph,
         treatment=proc_treatment_name,
         outcome=proc_outcome_name)
@@ -247,18 +280,28 @@ for proc_treatment in TREATMENTS_OUTCOMES:
         model.view_model(file_name="causal_model")
         model_graph_plot = True
 
-    estimands = model.identify_effect()
+    estimands = model.identify_effect(proceed_when_unidentifiable=True)
 
     # estimands_df = pd.DataFrame(estimands.estimands)
     # estimands_df["treatment"] = proc_treatment
     # estimands_df["outcome"] = TREATMENTS_OUTCOMES[proc_treatment]
 
-    estimate= model.estimate_effect(
-        identified_estimand=estimands,
-        method_name='backdoor.linear_regression',
-        confidence_intervals=True,
-        test_significance=True
-    )
+    try:
+        estimate= model.estimate_effect(
+            identified_estimand=estimands,
+            method_name='backdoor.propensity_score_weighting',
+            confidence_intervals=True,
+            test_significance=True,
+            # common_causes=['gender']
+        )
+    except Exception:
+        estimate= model.estimate_effect(
+            identified_estimand=estimands,
+            method_name='backdoor.linear_regression',
+            confidence_intervals=True,
+            test_significance=True
+        )
+        # plot_causal_effect(estimate, proc_df[proc_treatment_name], proc_df[proc_outcome_name])
 
     # Save to a text file
     filename = f"{proc_treatment_name}_{proc_outcome_name}_estimates.txt"
